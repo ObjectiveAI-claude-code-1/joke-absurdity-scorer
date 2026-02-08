@@ -1,0 +1,161 @@
+{
+  "type": "scalar.function",
+  "description": "Score the absurdity level of a joke. Evaluates how completely a joke departs from rational coherence across five dimensions: reality rupture (departure from the possible), semantic dissolution (breakdown of meaning), tonal commitment (seriousness of nonsense), internal dream logic (coherence within incoherence), and existential resonance (philosophical depth). Returns a value from 0 (completely grounded in reality) to 1 (pure absurdism). Accepts text, image, or video jokes.",
+  "input_schema": {
+    "type": "object",
+    "description": "Input for the joke absurdity scorer function.",
+    "properties": {
+      "joke": {
+        "anyOf": [
+          {
+            "type": "string",
+            "description": "A text joke (one-liner, absurdist story, nonsense verse, surreal narrative, etc.)"
+          },
+          {
+            "type": "image",
+            "description": "An image joke (surreal meme, dadaist comic, impossible visual juxtaposition, etc.)"
+          },
+          {
+            "type": "video",
+            "description": "A video joke (absurdist sketch, surreal TikTok, anti-comedy performance, etc.)"
+          }
+        ]
+      }
+    },
+    "required": [
+      "joke"
+    ]
+  },
+  "input_maps": [
+    {
+      "$starlark": "[['meaninglessness', 'Does the joke engage with the theme of meaninglessness or the futility of searching for meaning?'], ['alienation', 'Does the joke engage with the theme of alienation, disconnection, or the failure of communication?'], ['arbitrary_systems', 'Does the joke satirize or illuminate the arbitrary nature of social systems, rules, or conventions?'], ['identity_dissolution', 'Does the joke engage with the instability or arbitrariness of identity and selfhood?'], ['cosmic_indifference', 'Does the joke evoke the feeling of existing in an indifferent universe that does not care about human concerns?']]"
+    }
+  ],
+  "tasks": [
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert at evaluating absurdity in humor. Your task is to assess the REALITY RUPTURE dimension—how completely the joke breaks from physical, logical, or social reality.\n\nConsider:\n- Does the joke present physically impossible scenarios (talking objects, impossible transformations, defiance of physics)?\n- Are cause-and-effect relationships severed, inverted, or nonsensical?\n- Do characters or entities behave in ways that defy basic logic or psychology?\n- Has the setting transformed from recognizable reality into something alien or impossible?\n\nVote for the option that best describes the level of reality rupture in this joke."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "'Evaluate the REALITY RUPTURE in this joke:\\n\\n' + str(input['joke'])"
+          }
+        }
+      ],
+      "responses": [
+        "Grounded: Everything in the joke could happen in the real world; no impossible elements",
+        "Bent: Reality is stretched through exaggeration or hyperbole, but nothing truly impossible occurs",
+        "Fractured: Some impossible elements exist within an otherwise normal framework",
+        "Shattered: Reality is fundamentally unstable; impossible things are treated as normal",
+        "Dissolved: The concept of reality has become meaningless; pure impossibility"
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 0.0 + output['scores'][1] * 0.25 + output['scores'][2] * 0.5 + output['scores'][3] * 0.75 + output['scores'][4] * 1.0"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert at evaluating absurdity in humor. Your task is to assess the SEMANTIC DISSOLUTION dimension—how thoroughly the joke undermines semantic coherence, attacking meaning itself.\n\nConsider:\n- Do words maintain stable, conventional meanings, or do they drift and mutate?\n- Are categorical boundaries respected (nouns remain nouns, concrete things remain concrete)?\n- Does the joke employ non sequiturs that resist any coherent interpretation?\n- Is there a sense that language itself is being satirized, deconstructed, or rendered meaningless?\n\nVote for the option that best describes the level of semantic dissolution in this joke."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "'Evaluate the SEMANTIC DISSOLUTION in this joke:\\n\\n' + str(input['joke'])"
+          }
+        }
+      ],
+      "responses": [
+        "Stable: Language operates normally; words mean what they conventionally mean",
+        "Playful: Puns and double meanings exploit semantic flexibility within coherent bounds",
+        "Slippery: Meanings shift unexpectedly; context fails to anchor interpretation",
+        "Dissolving: Categories collapse; nouns become verbs, concrete becomes abstract, sense becomes nonsense",
+        "Void: Semantic content approaches zero; communication has become pure noise"
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 0.0 + output['scores'][1] * 0.25 + output['scores'][2] * 0.5 + output['scores'][3] * 0.75 + output['scores'][4] * 1.0"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert at evaluating absurdity in humor. Your task is to assess the TONAL COMMITMENT dimension—how seriously the joke presents its absurd content.\n\nQuality absurdist humor often derives power from treating nonsense with a straight face, while self-conscious 'random' humor signals its own silliness.\n\nConsider:\n- Does the joke wink at its own absurdity, or does it present nonsense deadpan?\n- Is there internal consistency in how characters react to impossible situations?\n- Do characters treat the absurd as mundane, or do they acknowledge the strangeness?\n- Does the work commit to its bizarre premise, or does it break frame to signal 'this is silly'?\n\nVote for the option that best describes the level of tonal commitment in this joke."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "'Evaluate the TONAL COMMITMENT in this joke:\\n\\n' + str(input['joke'])"
+          }
+        }
+      ],
+      "responses": [
+        "Uncommitted: The joke signals awareness of its own silliness; winking, mugging, or 'so random' energy",
+        "Semi-committed: Mostly straight-faced but with occasional acknowledgment of the absurdity",
+        "Committed: Treats the absurd scenario with genuine seriousness throughout",
+        "Fully Committed: The absurdity is presented as utterly mundane; no one notices anything unusual",
+        "Transcendently Committed: The seriousness is so total it loops back to being absurd"
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 0.0 + output['scores'][1] * 0.25 + output['scores'][2] * 0.5 + output['scores'][3] * 0.75 + output['scores'][4] * 1.0"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert at evaluating absurdity in humor. Your task is to assess the INTERNAL DREAM LOGIC dimension—whether the joke's absurdity follows its own internal rules.\n\nParadoxically, the best absurdist humor maintains consistency within its impossible framework—a dream logic that, while not mapping to reality, is predictable within its own terms.\n\nConsider:\n- Does the joke establish impossible premises and then follow them consistently?\n- Is there a sense of inevitability within the absurd framework?\n- Do the absurd elements relate to each other in patterned, predictable ways?\n- Could you anticipate what would happen next based on the established dream logic?\n\nVote for the option that best describes the level of internal dream logic in this joke."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "'Evaluate the INTERNAL DREAM LOGIC in this joke:\\n\\n' + str(input['joke'])"
+          }
+        }
+      ],
+      "responses": [
+        "Chaotic: Pure randomness with no internal consistency; elements are arbitrary and disconnected",
+        "Sporadic: Occasional patterns emerge but dissolve quickly; inconsistent logic",
+        "Emerging: A dream logic is partially visible; some absurd elements connect to each other",
+        "Consistent: Clear internal rules govern the absurdity; the impossible is predictable within its terms",
+        "Rigorous: The absurd framework is more strictly logical than reality itself"
+      ],
+      "output": {
+        "$starlark": "output['scores'][0] * 0.0 + output['scores'][1] * 0.25 + output['scores'][2] * 0.5 + output['scores'][3] * 0.75 + output['scores'][4] * 1.0"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "map": 0,
+      "messages": [
+        {
+          "role": "system",
+          "content": {
+            "$starlark": "'You are an expert at evaluating existential themes in absurdist humor. Your task is to assess whether the joke engages with a specific existential theme.\\n\\nTheme to evaluate: ' + map[0].upper() + '\\n\\nQuestion: ' + map[1] + '\\n\\nThis is a binary evaluation. Vote YES if the joke clearly engages with this theme, NO if it does not.'"
+          }
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "'Does this joke engage with the existential theme of ' + map[0].upper() + '?\\n\\n' + str(input['joke'])"
+          }
+        }
+      ],
+      "responses": [
+        "NO: The joke does not engage with this existential theme",
+        "YES: The joke clearly engages with this existential theme"
+      ],
+      "output": {
+        "$starlark": "sum([o['scores'][1] for o in output]) / len(output)"
+      }
+    }
+  ]
+}

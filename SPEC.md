@@ -1,0 +1,1 @@
+Create a vibrant, creative, and experimental Scalar Function. Each task should be very distinct. At least one should be mapped.
