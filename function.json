@@ -1,6 +1,6 @@
 {
   "type": "scalar.function",
-  "description": "Score the absurdity level of a joke. Evaluates how completely a joke departs from rational coherence across five dimensions: reality rupture (departure from the possible), semantic dissolution (breakdown of meaning), tonal commitment (seriousness of nonsense), internal dream logic (coherence within incoherence), and existential resonance (philosophical depth). Returns a value from 0 (completely grounded in reality) to 1 (pure absurdism). Accepts text, image, or video jokes.",
+  "description": "Score the absurdity level of a joke across five dimensions: reality rupture, semantic dissolution, tonal commitment, internal dream logic, and existential resonance. Returns 0 (grounded) to 1 (pure absurdism). Accepts text, image, or video jokes.",
   "input_schema": {
     "type": "object",
     "description": "Input for the joke absurdity scorer function.",

@@ -232,3 +232,6 @@ Let me now submit the function:
 I need to create the README first:
 [tool_use] mcp__invent__WriteReadme
 [tool_use] mcp__invent__Submit
+The description is too long for GitHub. Let me shorten the description:
+[tool_use] mcp__invent__EditDescription
+[tool_use] mcp__invent__Submit
