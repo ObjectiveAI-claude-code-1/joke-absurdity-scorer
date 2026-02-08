@@ -235,3 +235,39 @@ I need to create the README first:
 The description is too long for GitHub. Let me shorten the description:
 [tool_use] mcp__invent__EditDescription
 [tool_use] mcp__invent__Submit
+The function has been successfully submitted. The commit hash is `866dc61f8da49648759e8ffaac3d961993f41272`.
+
+## Summary
+
+I have successfully implemented the **joke-absurdity-scorer** function, which:
+
+### Function Type
+- **Scalar Function** returning a value from 0 (grounded) to 1 (pure absurdism)
+
+### Five Distinct Dimensions (Tasks)
+1. **Reality Rupture** (5-point spectrum): Measures departure from physical/logical possibility
+2. **Semantic Dissolution** (5-point spectrum): Measures breakdown of meaning and language
+3. **Tonal Commitment** (5-point spectrum): Measures how seriously the joke presents its nonsense
+4. **Internal Dream Logic** (5-point spectrum): Measures coherence within the incoherence
+5. **Existential Resonance** (MAPPED over 5 themes): Evaluates philosophical depth across:
+   - Meaninglessness
+   - Alienation
+   - Arbitrary Systems
+   - Identity Dissolution
+   - Cosmic Indifference
+
+### Input Support
+- Text jokes (strings)
+- Image jokes (image_url)
+- Video jokes (video_url)
+
+### Example Inputs
+25 diverse examples covering the full range of absurdity from grounded puns to Kafkaesque existential absurdism.
+
+### SPEC.md Compliance
+- ✅ Scalar function
+- ✅ Vibrant, creative, and experimental
+- ✅ Each task is very distinct
+- ✅ At least one task is mapped (existential resonance uses 5 mapped binary evaluations)
+[result] success turns=63 cost=$2.7960 duration=320.7s
+Running submit...
